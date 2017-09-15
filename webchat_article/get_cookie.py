@@ -16,11 +16,11 @@ browser.get(url)
 #获取输入框
 user = browser.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/form/div[1]/div[1]/div/span/input')
 user.clear()
-user.send_keys('627317664@qq.com') #用户名
+user.send_keys('your user') #用户名
 
 pwd = browser.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/form/div[1]/div[2]/div/span/input')
 pwd.clear()
-pwd.send_keys('123ggf..') #密码
+pwd.send_keys('your pass') #密码
 
 #点击记住密码
 browser.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/form/div[3]/label').click()
