@@ -34,6 +34,7 @@ def check():
             print(e)
             continue
     print('有效IP个数：',num)
+    read.close()
     valid_ip.close()
 
 
