@@ -12,7 +12,7 @@ import urllib.request
 def check():
     socket.setdefaulttimeout(2) #定义默认时间2秒
     #读取文件
-    read = open('ips.csv', 'r')
+    read = open('ips.csv', 'r', encoding='utf-8')
     lines = read.readlines()
     #有效IP存储
     valid_ip = open('valid_ip.csv', 'w', encoding='utf-8')
