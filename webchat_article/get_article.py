@@ -80,10 +80,10 @@ def run():
             for item in fakeid_list:
                 datas = {}
                 title = item.get('title')
-                datas['title'] = title
+                datas['title'] = title #文章标题
                 href = item.get('link')
-                datas['href'] = href
-                lis.append(datas)
+                datas['href'] = href #文章的链接
+                lis.append(datas) #添加到列表中
             num -= 1
             begin = int(begin)
             begin += 5
