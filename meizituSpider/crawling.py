@@ -2,6 +2,8 @@
 import os
 import datetime
 import random
+from pymongo import MongoClient
+
 
 import requests
 from bs4 import BeautifulSoup
@@ -14,6 +16,12 @@ class Meizitu:
     #初始化请求头，user_agent
     def __init__(self):
         self.headers = {'User-Agent': "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"}
+        client = MongoClient()
+        db = client['mztdb']
+        self.mzt_col = db['mzt']
+        self.title = '' #存储标题
+        self.url = '' #存储页面链接
+        self.img_urls = [] #存储图片url
 
     #发送请求获取response
     def request(self, url):
@@ -32,7 +40,10 @@ class Meizitu:
             print('套图名称：',path)
             self.makedir(path) #创建文件夹
             href = a['href'] #套图url
-            self.get_page_url(href) #获取套图中的url
+            if self.mzt_col.find_one('套图url',href):
+                print('该套图已经采集过')
+            else:
+                self.get_page_url(href) #获取套图中的url
 
     #解析url，获取页面图片url
     def get_page_url(self, href):
