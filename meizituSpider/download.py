@@ -69,5 +69,5 @@ class download():
                     print('代理也不好使')
                     return
 
-dw = download() #实例化
-print(dw.get('http://mzitu.com', 3))
+request = download() #实例化
+# print(dw.get('http://mzitu.com', 3))

@@ -5,7 +5,8 @@ import random
 
 import requests
 from bs4 import BeautifulSoup
-
+from meizituSpider import user_agent
+from meizituSpider import download
 '''
 爬取妹子图的类
 '''
@@ -21,7 +22,7 @@ class Meizitu:
 
     #获取所有套图url
     def get_all_url(self, url):
-        rep = self.request(url)
+        rep = download.request.get(url, 3) #使用download中的get方法，会使用到代理
         # print(rep.text)
         bs = BeautifulSoup(rep.text, 'lxml')
         all_a = bs.find('div', class_='all').find_all('a')
@@ -36,7 +37,8 @@ class Meizitu:
     #解析url，获取页面图片url
     def get_page_url(self, href):
         print("获取页面的url")
-        rsp = self.request(href) #请求套图url
+        # rsp = self.request(href) #请求套图url
+        rsp = download.request.get(href, 3)
         self.headers['referer'] = href #设置网页来源头，破解防盗链
         bs = BeautifulSoup(rsp.text, 'lxml')
         #获取也页数
@@ -50,7 +52,7 @@ class Meizitu:
     #获取每张图片url
     def get_imge_url(self, page_url):
         print('获取每一页的url')
-        rsp = self.request(page_url)
+        rsp = download.request.get(page_url, 3)
         bs = BeautifulSoup(rsp.text, 'lxml')
         #获取每张图片的url
         img_url = bs.find('div', class_='main-image').find('img')['src']
@@ -69,28 +71,9 @@ class Meizitu:
     该方法用于破解防盗链，加多一个referer,不加的话图片下载无法打开
     '''
     def requestpic(self, url, Referer):  ##这个函数获取网页的response 然后返回
-        user_agent_list = [ \
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1" \
-            "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11", \
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6", \
-            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6", \
-            "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1", \
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5", \
-            "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5", \
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3", \
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3", \
-            "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3", \
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24", \
-            "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
-        ]
+        user_agent_list = user_agent.UA #用户代理列表
         ua = random.choice(user_agent_list)
-        headers = {'User-Agent': ua, "Referer": Referer}  ##较之前版本获取图片关键参数在这里
+        headers = {'User-Agent': ua, "Referer": Referer}
         content = requests.get(url, headers=headers)
         return content
 
