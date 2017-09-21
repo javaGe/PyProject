@@ -21,10 +21,10 @@ class download():
         with open('valid_ip.csv', 'r', encoding='utf-8') as r:
             lines = r.readlines()  # 读取所有行
             for line in lines:
-                ip = re.sub(r'\n', '', line)
+                ip = re.sub(r'\n', '', line) #去除换行
                 if ip == '':
                     continue
-                self.iplist.append(ip)
+                self.iplist.append(ip) #将有效IP加到列表中
                 # print(self.iplist)
         self.user_agent_list = user_agent.UA  # 用户代理列表
 
