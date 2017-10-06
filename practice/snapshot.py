@@ -4,7 +4,6 @@ from selenium import webdriver
 import time
 import os
 
-
 browser = webdriver.PhantomJS()
 browser.set_window_size(1200, 900)
 browser.implicitly_wait(30)
@@ -61,7 +60,9 @@ def select():
     try:
         db = pymysql.connect("192.168.0.19", "root", "paladata", "ICDB_Dev")
         cur = db.cursor()
-        sql = 'SELECT Article_ID, Article_URL FROM Article WHERE Program_Tag in("BaiduSpider_GGF","toutiaoSpider_hmh")'
+        #sql = 'SELECT Article_ID, Article_URL FROM Article WHERE Creation_Date REGEXP "2017-09-27.*" and Program_Tag = "BaiduSpider_GGF"'
+        sql = 'SELECT Article_ID, Raw_File_Path FROM Article where Creation_Date REGEXP "2017-09-27.*" and Program_Tag in ("WechatSpider_cgc","toutiaoSpider_hmh")'
+        #sql = 'SELECT Article_ID, Raw_File_Path FROM Article where Creation_Date REGEXP "2017-09-11.*" and Program_Tag="toutiaoSpider_hmh"'
         cur.execute(sql)
         result = cur.fetchall()
         for raw in result:
@@ -73,29 +74,27 @@ def select():
     finally:
         db.close()
 
+
 def main():
     select()
     print(id_url)
-    num =  0
-    # for key in id_url:
-    #     html2pic(id_url[key], key + '.png')
-    #     print("第%s张" % num)
-    #     num += 1
-    # browser.quit()
-
-    # d = {#'1': 'http://blog.csdn.net/marksinoberg/article/details/58644436',
-    #      # '2': 'http://www.jb51.net/article/52329.htm',
-    #      '4': 'http://data.eastmoney.com/notices/detail/002903/AN201709250910088062,JUU1JUFFJTg3JUU3JThFJUFGJUU2JTk1JUIwJUU2JThFJUE3.html'}
-
+    print(id_url.__len__())
+    num = 1
+    path = 'D:/SNAPSHOT/20170927/'
+    if not os.path.exists(path):
+        os.makedirs(path)
+    action = time.time()
     for key in id_url:
-        args1 = id_url[key]
-        args2 = key
+        args1 = id_url[key].replace('D:/ic_files', 'http://192.168.0.19')
+        #args1 = id_url[key]
+        args2 = path + key+'.png'
         start = time.time()
         os.system('phantomjs js_snapshot.js {0} {1}'.format(args1, args2))
         end = time.time()
-        print("用时：%s" %str((end - start)))
+        print("用时：%s" % str((end - start)))
         print("第%s张" % num)
         num += 1
+    print('总用时长：%s' % str((time.time() - action)))
 
 if __name__ == '__main__':
     main()
