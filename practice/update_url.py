@@ -5,7 +5,7 @@ import pymysql
 def update(id, url):
     try:
 
-        db = pymysql.connect('192.168.0.117', 'root', 'root', 'icdb_dev', charset='utf8mb4')
+        db = pymysql.connect('192.168.0.19', 'root', 'root', 'icdb_dev', charset='utf8mb4')
         cur = db.cursor()
         sql = "update Article set Snapshot_URL='%s' where Article_ID='%s' and Snapshot_URL=''" % (url, id)
         cur.execute(sql)

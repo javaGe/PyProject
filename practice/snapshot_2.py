@@ -1,8 +1,7 @@
 import time
 from selenium import webdriver
 
-url = "https://baike.baidu.com/item/Java/85979?fr=aladdin"
-
+url = "http://www.toutiao.com/a6452102005488878093/"
 browser = webdriver.PhantomJS()
 browser.get(url)
 browser.maximize_window()
