@@ -11,7 +11,7 @@ db = pymysql.connect("192.168.0.19", "root", "root", "icdb_dev", charset='utf8mb
 brower = webdriver.PhantomJS()
 brower.implicitly_wait(30)
 brower.set_window_size(1280, 800)
-SNAPSHOT_PATH = 'D:/ic_files/SNAPSHOT/20170929/'
+SNAPSHOT_PATH = 'D:/ic_files/SNAPSHOT/20171008/'
 #创建快照文件夹
 if not os.path.exists(SNAPSHOT_PATH):
 	os.makedirs(SNAPSHOT_PATH)
@@ -24,12 +24,12 @@ def select():
 		# sql = "select Article_ID, Article_URL from Article order by Program_Tag desc"
 		# curDate = time.strftime('%Y-%m-%d', time.localtime())
 		# sql = "select Article_ID, Article_URL from Article where Creation_Date REGEXP '^" + curDate + ".*'" + " and Program_Tag!='WechatSpider_cgc' and Snapshot_URL ='' order by Program_Tag desc"
-		sql = 'select Article_ID, Raw_File_Path FROM Article where Creation_Date regexp "2017-09-29.*" and Program_Tag="toutiaoSpider_hmh"and Snapshot_URL =""'
+		sql = 'select Article_ID, Article_URL FROM Article where Creation_Date regexp "2017-10-08.*" and Program_Tag="BaiduSpider_GGF"and Snapshot_URL =""'
 		cur.execute(sql)
 		results = cur.fetchall()
 		for row in results:
 			aid = row[0]
-			url = row[1].replace('D:/ic_files', 'http://192.168.0.19')
+			url = row[1]#.replace('D:/ic_files', 'http://192.168.0.19')
 			id_url[aid] = url
 	except Exception as e:
 		print(e)
