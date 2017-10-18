@@ -12,8 +12,8 @@ import urllib.request
 def check():
     socket.setdefaulttimeout(2) #定义默认时间2秒
     #读取文件
-    read = open('ips.csv', 'r', encoding='utf-8')
-    lines = read.readlines()
+    with open('ips.csv', 'r', encoding='utf-8') as r:
+        lines = r.readlines()
     #有效IP存储
     valid_ip = open('valid_ip.csv', 'w', encoding='utf-8')
     print(lines)
@@ -31,10 +31,8 @@ def check():
             #将有效的IP存入文件
             valid_ip.write(row+'\n')
         except Exception as e:
-            print(e)
             continue
     print('有效IP个数：',num)
-    read.close()
     valid_ip.close()
 
 
