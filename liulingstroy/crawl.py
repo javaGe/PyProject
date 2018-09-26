@@ -12,7 +12,7 @@ url：http://www.60355.com/0_202/
 class LiuLing():
     def __init__(self):
         self.headers = {'User-Agent': "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"}
-        self.path = 'D:/stroy/太古神王/'
+        self.path = 'D:/stroy/总裁贴身兵王/'
         self.makedir(self.path)  # 创建文件夹
 
     def request(self, url):
@@ -36,7 +36,7 @@ class LiuLing():
         rsp.encoding = 'gbk'
         # print(rsp.text)
         soup = BeautifulSoup(rsp.text, 'lxml')
-        dds = soup.find('div', id='list').find_all('dd')[224:] #获取所有的标题
+        dds = soup.find('div', id='list').find_all('dd')[570:] #获取所有的标题
         site = 'http://www.60355.com' #网站链接
         for dd in dds:
             time.sleep(5)
@@ -76,4 +76,4 @@ class LiuLing():
 
 
 ll = LiuLing()
-ll.get_title_url(url='http://www.60355.com/0_202/')
+ll.get_title_url(url='http://www.60355.com/12_12799/')

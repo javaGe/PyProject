@@ -10,7 +10,7 @@ from meizituSpider import user_agent
 import re
 
 
-class download():
+class Req():
     def __init__(self):
         '''
         初始化代理IP列表和用户代理
@@ -44,30 +44,30 @@ class download():
             except:  # 请求出现异常时，继续按照设定的次数进行请求
                 if num_req > 0:
                     time.sleep(5)
-                    print('获取页面出错，请求第%s次' % (num_req))
+                    print('获取页面出错，剩余请求次数%s次' % (num_req))
                     return self.get(url, timeout, num_req=num_req - 1)  # 继续调用请求
                 else:
                     print('使用代理。。。')
-                    time.sleep(10)
+                    time.sleep(5)
                     IP = ''.join(str(random.choice(self.iplist)).strip())
                     proxy = {'http': IP}
                     return self.get(url, timeout, proxy)
         else:  # 代理不为空时
             try:
-                IP = ''.join(str(random.choice(self.iplist)).strip())
-                proxy = {'http': IP}
+                # IP = ''.join(str(random.choice(self.iplist)).strip())
+                # proxy = {'http': IP}
                 return requests.get(url, headers=headers, proxys=proxy, timeout=timeout)
             except: #更换代理
                 if num_req > 0:
-                    time.sleep(10)
+                    time.sleep(5)
                     IP = ''.join(str(random.choice(self.iplist)).strip())
                     proxy = {"http": IP}
-                    print('正在更换代理，请求第%s次' %(num_req))
-                    print('当前代理为：%s' %(IP))
+                    print('剩余请求%s次' %(num_req))
+                    print('更换代理为：%s' %(IP))
                     return self.get(url, timeout, proxy, num_req-1)
                 else: #退出代理
-                    print('代理也不好使')
+                    print('网站封了你，代理也不好使，自己看着办。。。')
                     return
 
-request = download() #实例化
+request = Req() #实例化
 # print(dw.get('http://mzitu.com', 3))

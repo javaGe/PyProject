@@ -4,7 +4,8 @@ import random
 import time
 import requests
 from pymongo import MongoClient
-
+import meizituSpider.download
+from bs4 import BeautifulSoup
 
 def run():
     gzlist = ['ImportNew']  # 公众号
@@ -22,7 +23,7 @@ def run():
     cookies = json.loads(cookie)
     response = requests.get(url=url, cookies=cookies)
     token = re.findall(r'token=(\d+)', str(response.url))[0]  # 获取链接中令牌
-    # 存储数据字典
+    # 存储数据
     lis = []
     # 设置请求参数
     for query in gzlist:
@@ -84,11 +85,30 @@ def run():
                 href = item.get('link')
                 datas['href'] = href #文章的链接
                 lis.append(datas) #添加到列表中
+                get_text(href)
             num -= 1
             begin = int(begin)
             begin += 5
             time.sleep(2)
     return lis
+
+
+def get_text(url_lis):
+    '''
+    获取链接中的文本信息
+    :param url_lis: 文章url
+    :return:
+    '''
+    # for url in url_lis:
+    rsp = meizituSpider.download.request.get(url_lis, 6)
+    soup = BeautifulSoup(rsp.text, 'lxml')
+    title = soup.find(id='activity-name').get_text().strip()
+    title = title.replace('/', '').replace('（', '').replace('）', '')
+    print('title:',title)
+    content = soup.find(class_='rich_media_content ').get_text()
+    time.sleep(3)
+    with open('D:\\importnew\\'+title+'.txt', 'w', encoding='utf-8') as w:
+        w.write(content)
 
 
 def sava_mg(lis):
@@ -107,9 +127,9 @@ def main():
     程序入口
     :return:
     '''
-
-    lis = run()
-    sava_mg(lis)
+    lis = run() #获取文章信息
+    # get_text(lis)
+    # sava_mg(lis) #数据入库
 
 if __name__ == '__main__':
     main()
