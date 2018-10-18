@@ -33,7 +33,7 @@ class Meizitu:
         rep = download.request.get(url, 3) #使用download中的get方法，会使用到代理
         # print(rep.text)
         bs = BeautifulSoup(rep.text, 'lxml')
-        all_a = bs.find('div', class_='all').find_all('a')
+        all_a = bs.find('div', class_='all').find_all('a')[1:]
         for a in all_a:
             title = a.get_text() #套图的标题
             path = title.replace('?', '-') #文件名称
