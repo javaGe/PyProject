@@ -13,7 +13,7 @@ http://music.163.com/song/media/outer/url?id=
 加上id.mp3
 483671599.mp3
 '''
-
+# 创建一个音乐实体类
 class Music163(object):
     # 初始化时设置参数
     def __init__(self):
@@ -39,12 +39,13 @@ class Music163(object):
             print('name=' + name)
             try:
                 # 使用urllib模块下载音频文件urllib.request.urlretrieve（url, savepath） url:音乐链接，savepath:音频保存路径
-                urllib.request.urlretrieve('http://music.163.com/song/media/outer/url?id=' + str(id) + '.mp3', 'D:/KuGou/douyin/' + name +'.mp3')
+                urllib.request.urlretrieve('http://music.163.com/song/media/outer/url?id=' + str(id) + '.mp3', 'D:/Program Files (x86)/Netease/音乐/douyin/' + name +'.mp3')
+                time.sleep(2)
             except Exception as e:
                 continue
     def get_songs_list(self):
         url = r'http://music.163.com/api/search/pc'
-        page = 60
+        page = 0
         dispage = 30
         while True:
             data = {
@@ -65,7 +66,7 @@ class Music163(object):
                 print('访问失败')
                 break
             page += 30
-            time.sleep(1)
+            time.sleep(3)
 
 def main():
     music163 = Music163()

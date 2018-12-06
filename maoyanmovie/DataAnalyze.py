@@ -27,6 +27,7 @@ from PIL import Image
 import numpy as np
 
 
+
 def read_csv(filename, titles):
     comments = pd.read_csv(filename, names=titles)
     return comments
@@ -148,9 +149,10 @@ if __name__ == "__main__":
     filename = "./comments.csv"
     titles = ['nickName', 'cityName', 'content', 'score', 'startTime']
     comments = read_csv(filename, titles)
-    draw_map(comments)
-    draw_bar(comments)
-    draw_wordCloud(comments)
-    draw_DateBar(comments)
-    draw_TimeBar(comments)
+    print(comments.head(5))
+    # draw_map(comments)
+    # draw_bar(comments)
+    # draw_wordCloud(comments)
+    # draw_DateBar(comments)
+    # draw_TimeBar(comments)
     print('success!!')
