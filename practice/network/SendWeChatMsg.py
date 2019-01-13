@@ -16,12 +16,17 @@ def get_news():
 def send_news():
     try:
         itchat.auto_login()  # 会弹出网页二维码，扫描即可，登入你的微信账号，True保持登入状态
-        my_girfriend = itchat.search_friends(name='张鹏')  # name改成你心爱的人在你微信的备注
+        my_girfriend = itchat.search_friends(name='tester')  # name改成你心爱的人在你微信的备注
         mylover = my_girfriend[0]["UserName"]
-        message1 = str(get_news()[0])  # 获取金山字典的内容
-        content = str(get_news()[1][17:])
-        message2 = str(content)
-        message3 = "来自一个神秘的地方"
+        # message1 = str(get_news()[0])  # 获取金山字典的内容
+        # content = str(get_news()[1][17:])
+        # message2 = str(content)
+        # message3 = "来自一个神秘的地方"
+
+        message1 = '1'
+        message2 = '2'
+        message3 = '3'
+
         itchat.send(message1, toUserName=mylover)
         itchat.send(message2, toUserName=mylover)
         itchat.send(message3, toUserName=mylover)
@@ -32,4 +37,6 @@ def send_news():
 
 
 if __name__ == "__main__":
-    send_news()
+    # send_news()
+    news = get_news()
+    print(news[0]+'\n'+news[1])
