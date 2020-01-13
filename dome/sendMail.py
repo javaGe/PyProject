@@ -3,11 +3,11 @@ import email.mime.multipart
 import email.mime.text
 
 msg = email.mime.multipart.MIMEMultipart()
-msgFrom = '15813081353@163.com' #从该邮箱发送
-msgTo = 'geguangfu@dataofbank.com' #发送到该邮箱
+msgFrom = 'xxxxxx@163.com' #从该邮箱发送
+msgTo = 'xxxx@dataofbank.com' #发送到该邮箱
 smtpSever='smtp.163.com' # 163邮箱的smtp Sever地址
 smtpPort = '25' #开放的端口
-sqm='g15813081353'  # 在登录smtp时需要login中的密码应当使用授权码而非账户密码
+sqm='xxxxxx'  # 在登录smtp时需要login中的密码应当使用授权码而非账户密码
 
 msg['from'] = msgFrom
 msg['to'] = msgTo
