@@ -8,7 +8,7 @@ reload(sys)
 sys.setdefaultencoding('utf8') # 设置默认编码格式为'utf-8'
 
 
-1.拿到团队工作台的url：http://58.62.207.51:9990/secure/resourceManagerAction!mainpage.jspa
+1.拿到团队工作台的url：http://xxxxxxx/secure/resourceManagerAction!mainpage.jspa
 2.登录个人jira系统
 3.进行截图，保存图片，后续将保存好的图片发送到微信群
 4.编写发送群信息的函数
@@ -80,7 +80,7 @@ def screenshots():
     '''
 
     try:
-        url = 'http://58.62.207.51:9990/secure/deskDomainAction!mainpage.jspa'
+        url = 'http://xxxxxx/secure/deskDomainAction!mainpage.jspa'
         # drive = wb.Chrome()
         driver = wb.PhantomJS()
         driver.implicitly_wait(30)
